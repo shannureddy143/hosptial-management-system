@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CarePlus Hospital</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <h2 class="logo">Care<span>Plus</span></h2>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Doctors</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#appointment">Appointment</a></li>
+        <li><a href="index.html">Logout</a></li>
+    </ul>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="hero-text">
+        <h1>Your Health, Our Priority</h1>
+        <p>Trusted care by experienced doctors with modern facilities.</p>
+        <button id="bookBtn">Book Appointment</button>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+    <h2>Our Services</h2>
+    <div class="service-box">
+        <div class="card">🩺 General Checkup</div>
+        <div class="card">❤️ Cardiology</div>
+        <div class="card">🧠 Neurology</div>
+        <div class="card">🦷 Dental Care</div>
+    </div>
+</section>
+
+<!-- DOCTORS -->
+<section class="doctors">
+    <h2>Our Doctors</h2>
+    <div class="doctor-box">
+        <div class="doctor-card">
+            <img src="https://i.imgur.com/0y8Ftya.png">
+            <h3>Dr. Anjali</h3>
+            <p>Cardiologist</p>
+        </div>
+        <div class="doctor-card">
+            <img src="https://i.imgur.com/0y8Ftya.png">
+            <h3>Dr. Raj</h3>
+            <p>Neurologist</p>
+        </div>
+        <div class="doctor-card">
+            <img src="https://i.imgur.com/0y8Ftya.png">
+            <h3>Dr. Meera</h3>
+            <p>Dental Specialist</p>
+        </div>
+    </div>
+</section>
+
+<!-- APPOINTMENT -->
+<section class="appointment" id="appointment">
+    <h2>Book Appointment</h2>
+    <p id="appointment-msg"></p>
+    <form id="appointmentForm">
+        <input type="text" id="patientName" placeholder="Patient Name" required>
+        <input type="email" id="patientEmail" placeholder="Email" required>
+        <select id="doctorSelect" required>
+            <option value="">Select Doctor</option>
+            <option>Dr. Anjali</option>
+            <option>Dr. Raj</option>
+            <option>Dr. Meera</option>
+        </select>
+        <input type="date" id="appointmentDate" required>
+        <button type="submit">Book Appointment</button>
+    </form>
+</section>
+
+<!-- DOCTOR AVAILABILITY & CONFIRMATION -->
+<section class="doctor-confirmation" id="doctorConfirmation" style="display:none; padding:50px; text-align:center;">
+    <h2>Confirm Your Appointment</h2>
+    <p id="confirm-msg"></p>
+    <button id="confirmBtn" style="padding:10px 20px; background-color:#27ae60; color:white; border:none; border-radius:5px; cursor:pointer;">Confirm Appointment</button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2025 CarePlus Hospital | All Rights Reserved</p>
+</footer>
+
+<script>
+    const bookBtn = document.getElementById('bookBtn');
+    const appointmentSection = document.getElementById('appointment');
+    const appointmentMsg = document.getElementById('appointment-msg');
+    const appointmentForm = document.getElementById('appointmentForm');
+    const doctorConfirmation = document.getElementById('doctorConfirmation');
+    const confirmMsg = document.getElementById('confirm-msg');
+    const confirmBtn = document.getElementById('confirmBtn');
+
+    // Scroll to appointment form
+    bookBtn.addEventListener('click', () => {
+        appointmentSection.scrollIntoView({ behavior: 'smooth' });
+        appointmentMsg.innerText = "Enter your details below to book an appointment:";
+        appointmentMsg.style.color = "#0077b6";
+        appointmentMsg.style.fontWeight = "bold";
+        appointmentMsg.style.marginBottom = "15px";
+    });
+
+    // Appointment form submission
+    appointmentForm.addEventListener('submit', function(e){
+        e.preventDefault();
+
+        const name = document.getElementById('patientName').value;
+        const email = document.getElementById('patientEmail').value;
+        const doctor = document.getElementById('doctorSelect').value;
+        const date = document.getElementById('appointmentDate').value;
+
+        if(!doctor || !date) {
+            alert("Please select a doctor and date");
+            return;
+        }
+
+        // Hide appointment form
+        appointmentSection.style.display = "none";
+
+        // Show confirmation section
+        doctorConfirmation.style.display = "block";
+        confirmMsg.innerHTML = `
+            Patient Name: <b>${name}</b><br>
+            Email: <b>${email}</b><br>
+            Doctor: <b>${doctor}</b><br>
+            Appointment Date: <b>${date}</b><br><br>
+            Please confirm your appointment.
+        `;
+
+        doctorConfirmation.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Confirm appointment
+    confirmBtn.addEventListener('click', () => {
+        alert('Your appointment has been confirmed!');
+        // Reset everything
+        doctorConfirmation.style.display = "none";
+        appointmentSection.style.display = "block";
+        appointmentForm.reset();
+        appointmentMsg.innerText = "";
+    });
+</script>
+
+</body>
+</html>
